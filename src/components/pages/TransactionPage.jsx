@@ -1,13 +1,14 @@
 import Button from '../_share/Button/Button'
 import TransactionForm from '../TransactionForm/TransactionForm'
 
-const TransactionPage = () => {
+const TransactionPage = ({ transType, handleCloseTransactionForm }) => {
+
+  
   return (
     <div>
-      <Button title="GoBack" />
-      <h1>Costs</h1>
-      <TransactionForm />
-
+      <Button title="GoBack" cbOnClick={handleCloseTransactionForm} />
+      <h1> {transType === 'costs' ? 'Расходы' : 'Доходы'}</h1>
+      <TransactionForm transType={transType} handleCloseTransactionForm={handleCloseTransactionForm} />
     </div>
   )
 }

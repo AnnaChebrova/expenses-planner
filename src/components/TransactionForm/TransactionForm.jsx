@@ -1,6 +1,7 @@
 // import Button from '../_share/Button/Button'
 
 import { Component } from 'react'
+import moment from 'moment'
 import LabelInput from '../Labelinput/Labelinput'
 import Button from '../_share/Button/Button'
 
@@ -22,8 +23,8 @@ import Button from '../_share/Button/Button'
 
 class TransactionForm extends Component {
   state = {
-    date: '',
-    time: '',
+    date: moment().format("YYYY-MM-DD"),
+    time: moment().format("hh:mm"),
     category: 'Еда',
     sum: '',
     currency: 'UAH',
@@ -37,9 +38,11 @@ class TransactionForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const dataFromLS = localStorage.getItem('transactions')
+    const {transType, handleCloseTransactionForm} = this.props;
+    const dataFromLS = localStorage.getItem(transType)
     const transactions = dataFromLS === null ? [] : JSON.parse(dataFromLS)
-    localStorage.setItem('transactions', JSON.stringify([...transactions, this.state]))
+    localStorage.setItem(transType, JSON.stringify([...transactions, this.state]))
+    handleCloseTransactionForm()
   }
 
   render() {

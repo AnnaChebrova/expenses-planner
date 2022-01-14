@@ -1,8 +1,12 @@
 import Button from '../_share/Button/Button'
 
-const MainInfo = ({ title, data, transType }) => {
+const MainInfo = ({ title, data, transType, handleOpenTransactionForm }) => {
 
-    transType = "costs" || "incomes"
+    // transType = "costs" || "incomes"
+
+    const handleOpenTransaction = () => {
+      handleOpenTransactionForm(transType)
+    }
 
   return (
     <div>
@@ -16,7 +20,7 @@ const MainInfo = ({ title, data, transType }) => {
           </li>
         ))}
       </ul>
-      <Button title="Add" />
+      <Button title="Add" cbOnClick={handleOpenTransaction} />
     </div>
   )
 }

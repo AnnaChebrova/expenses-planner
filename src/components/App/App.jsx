@@ -8,9 +8,29 @@ class App extends Component {
   state = {
     transType: '',
   }
+
+  handleOpenTransactionForm = (transType) => {
+    this.setState({ transType })
+  }
+
+  handleCloseTransactionForm = (transType) => {
+    this.setState({ transType: '' })
+  }
+
   render() {
     return (
-      <>{this.state.transType === '' ? <MainPage /> : <TransactionPage />}</>
+      <>
+        {this.state.transType === '' ? (
+          <MainPage
+            handleOpenTransactionForm={this.handleOpenTransactionForm}
+          />
+        ) : (
+          <TransactionPage
+            transType={this.state.transType}
+            handleCloseTransactionForm={this.handleCloseTransactionForm}
+          />
+        )}
+      </>
     )
   }
 }
