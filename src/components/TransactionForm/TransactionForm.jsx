@@ -1,7 +1,6 @@
 // import Button from '../_share/Button/Button'
 
 import { Component } from 'react'
-import moment from 'moment'
 import LabelInput from '../Labelinput/Labelinput'
 import Button from '../_share/Button/Button'
 
@@ -22,30 +21,23 @@ import Button from '../_share/Button/Button'
 // }
 
 class TransactionForm extends Component {
-  state = {
-    date: moment().format("YYYY-MM-DD"),
-    time: moment().format("hh:mm"),
-    category: 'Еда',
-    sum: '',
-    currency: 'UAH',
-    comment: '',
-  }
-
-  handleChange = (e) => {
-    const { name, value } = e.target
-    this.setState({ [name]: value })
-  }
-
+  state={}
   handleSubmit = (e) => {
     e.preventDefault()
-    const {transType, handleCloseTransactionForm} = this.props;
+    const { transType, handleCloseTransactionForm } = this.props
     const dataFromLS = localStorage.getItem(transType)
     const transactions = dataFromLS === null ? [] : JSON.parse(dataFromLS)
-    localStorage.setItem(transType, JSON.stringify([...transactions, this.state]))
+    // console.log("this.state :>>", this.state)
+    localStorage.setItem(
+      transType,
+      JSON.stringify([...transactions, this.props.dataForm]),
+    )
     handleCloseTransactionForm()
   }
 
   render() {
+    const { dataForm, handleToggleCatList, handleChange } = this.props
+    const { date, time, category, sum, currency, comment } = dataForm
     return (
       <form onSubmit={this.handleSubmit}>
         <h1>TransactionForm</h1>
@@ -53,43 +45,43 @@ class TransactionForm extends Component {
           title="День"
           type="date"
           name="date"
-          value={this.state.date}
-          cbOnChange={this.handleChange}
+          value={date}
+          cbOnChange={handleChange}
         />
         <LabelInput
           title="Время"
           type="time"
           name="time"
-          value={this.state.time}
-          cbOnChange={this.handleChange}
+          value={time}
+          cbOnChange={handleChange}
         />
         <LabelInput
           title="Категория"
           type="button"
           name="category"
-          value={this.state.category}
-          cbOnChange={this.handleChange}
+          value={category}
+          cbOnClick={handleToggleCatList}
         />
         <LabelInput
           title="Сумма"
           name="sum"
-          value={this.state.sum}
+          value={sum}
           placeholder="Введите сумму"
-          cbOnChange={this.handleChange}
+          cbOnChange={handleChange}
         />
         <LabelInput
           title="Валюта"
           type="button"
           name="currency"
-          value={this.state.currency}
-          cbOnChange={this.handleChange}
+          value={currency}
+          cbOnChange={handleChange}
         />
         <LabelInput
           title="Комментарий"
           name="comment"
-          value={this.state.comment}
+          value={comment}
           placeholder="Комментарий"
-          cbOnChange={this.handleChange}
+          cbOnChange={handleChange}
         />
         <Button type="type" title="Записать" />
       </form>

@@ -5,19 +5,25 @@ const LabelInput = ({
   value,
   placeholder = '',
   cbOnChange,
+  cbOnClick,
 }) => {
   return (
-      <div>
-    <label>
-      {title}
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={cbOnChange}
-        placeholder={placeholder}
-      />
-    </label>
+    <div>
+      <label>
+        {title}
+
+        {cbOnChange ? (
+          <input
+            type={type}
+            name={name}
+            value={value}
+            onChange={cbOnChange}
+            placeholder={placeholder}
+          />
+        ) : (
+          <input type={type} name={name} value={value} onClick={cbOnClick} />
+        )}
+      </label>
     </div>
   )
 }
